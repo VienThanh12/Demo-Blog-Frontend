@@ -202,6 +202,8 @@ const App = () => {
     }
     else return (
         <div>
+            <Notification message = {errorMessage}/>
+            <NotiOfCreating message = {noti} />
             <h2> log in to application </h2>
             {loginForm()}
         </div>
