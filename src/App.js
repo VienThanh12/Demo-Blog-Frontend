@@ -169,33 +169,41 @@ const App = () => {
                 })
         }
     }
-    return (
-        <div>
-            <Notification message = {errorMessage}/>
-            <NotiOfCreating message = {noti} />
-            <h2> <b> blogs </b> </h2>
-            {user === null && loginForm()}
-            {user !== null && 
-            <div>    
-                <p> {user.username} logged in <button id = "logout-button" onClick = {logOut}> logout </button> </p> 
+    if(user){
+        return (
+            <div>
+                <Notification message = {errorMessage}/>
+                <NotiOfCreating message = {noti} />
+                <h2> <b> blogs </b> </h2>
+                {user === null && loginForm()}
+                {user !== null && 
+                <div>    
+                    <p> {user.username} logged in <button id = "logout-button" onClick = {logOut}> logout </button> </p> 
+                </div>
+                }
+
+                <Togglable buttonLabelFirst = 'create new blog' buttonLabelSecond = 'cancel'  buttonLabel = "hi">
+                    <h2> creat new</h2>
+                    <BlogForm
+                        addBlog = {addBlog}
+                        title = {title}
+                        author = {author}
+                        url = {url}
+                        handleTitleChange = {({target}) => setTitle(target.value)}
+                        handleAuthorChange = {({target}) => setAuthor(target.value)}
+                        handleUrlChange = {({target}) => setUrl(target.value)}
+                    />
+                </Togglable>
+
+                {blogs.map(blog => 
+                <Blog id = "blog-content" key = {blog.id} blog = {blog} addLikes = {addLikes} removeBlog = {removeBlog}/>)}
             </div>
-            }
-
-            <Togglable buttonLabelFirst = 'create new blog' buttonLabelSecond = 'cancel'  buttonLabel = "hi">
-                <h2> creat new</h2>
-                <BlogForm
-                    addBlog = {addBlog}
-                    title = {title}
-                    author = {author}
-                    url = {url}
-                    handleTitleChange = {({target}) => setTitle(target.value)}
-                    handleAuthorChange = {({target}) => setAuthor(target.value)}
-                    handleUrlChange = {({target}) => setUrl(target.value)}
-                />
-            </Togglable>
-
-            {blogs.map(blog => 
-            <Blog id = "blog-content" key = {blog.id} blog = {blog} addLikes = {addLikes} removeBlog = {removeBlog}/>)}
+        )
+    }
+    else return (
+        <div>
+            <h2> log in to application </h2>
+            {loginForm()}
         </div>
     )
 }
